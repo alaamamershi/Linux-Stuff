@@ -1,0 +1,2 @@
+sudo apt -y install i3-wm dunst i3lock i3status suckless-tools compton hsetroot rxvt-unicode xsel rofi fonts-noto fonts-mplus xsettingsd lxappearance scrot viewnior
+ libdbus-1-dev
