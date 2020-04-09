@@ -1,11 +1,11 @@
 #/bin/bash
 
 #########################################################################################
-# debianSetup.sh
+# DebianSetup.sh
 # 
 # Author:			Alaam Amershi
 # Date:				10/26/19
-# Last Modified:	04/08/20
+# Last Modified:	04/09/20
 # 
 # Description:
 # Setup script for fresh Debian installs.
