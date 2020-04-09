@@ -3,12 +3,12 @@
 #########################################################################################
 # debianSetup.sh
 # 
-# Author:		Alaam Amershi
-# Date:			10/26/19
-# Last Modified:	02/12/20
+# Author:			Alaam Amershi
+# Date:				10/26/19
+# Last Modified:	04/08/20
 # 
 # Description:
-# Setup script for vanilla Debian.
+# Setup script for fresh Debian installs.
 #########################################################################################
 
 #########################################################################################
@@ -23,33 +23,33 @@ normal='\033[0m'
 
 
 #########################################################################################
-# SETUP
+# STARTUP
 #########################################################################################
 
 # Title.
-printf "${green}\n\t\t <<< %s >>> \n${normal}" $0
+printf "\n\t\t$green<<< %s >>>$normal\n" $0
 
 # Check if script is being run as root.
 if [[ $EUID -ne 0 ]]; then
-	printf "${red}%s${normal}" "Error: You must be logged in as root to run this script."
+	printf "$red%s$normal\n" "Error: You must be logged in as root to run this script."
 	exit 1
 fi
 
 
 #########################################################################################
-# INSTALL CUSTOM THEMES
+# CUSTOM APPEARANCE (CREATE DIRECTORIES + COPY FILES)
 #########################################################################################
 
 # Install custom themes.
 if [[ $(ls | grep themes | wc -c) -gt 0 ]]; then
-	mkdir "$HOME/.themes"
-	cp -v themes/* $HOME/.themes
+	mkdir ~/.themes
+	cp -v themes/* ~/.themes
 fi
 
 # Install custom icons.
 if [[ $(ls | grep icons | wc -c) -gt 0 ]]; then
-	mkdir "$HOME/.icons"
-	cp -v icons/* $HOME/.icons
+	mkdir ~/.icons
+	cp -v icons/* ~/.icons
 fi
 
 
@@ -62,7 +62,7 @@ apt -y autoremove --purge gnome-games-common gnome-calendar gnome-contacts
 apt -y autoremove --purge cheese rhythmbox
 apt -y autoremove --purge libreoffice*
 #apt -y autoremove --purge 
-apt -y autoremove
+apt -y autoremove 
 
 # Add custom package repositories.
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
@@ -71,19 +71,46 @@ add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/16.
 # Install packages.
 apt update
 apt -y upgrade
-apt -y install sudo make gdebi gcc-8
+apt -y install sudo make cmake gdebi gcc-8
 apt -y install linux-headers-$(uname -r)
-apt -y install openvpn tor lynx mosh tmux nmap
+apt -y install openvpn tor lynx mosh tmux nmap sshfs samba samba-common-bin
 apt -y install apache2 php libapache2-mod-php
-apt -y install wireshark gqrx-sdr
+apt -y install wireshark gqrx-sdr vlc
+#apt -y install 
 
 
 #########################################################################################
-# GIVE SUDO ACCESS TO USER
+# USER PERMS
 #########################################################################################
 
 usermod -a -G sudo $USER
-chown -r /var/www/html $USER:$USER
+usermod -a -G www-data $USER
 
 
-printf "\n\n${green}%s\n" "Done!"
+#########################################################################################
+# FINISH
+#########################################################################################
+
+printf "\n\n$green%s$normal\n" "Done!"
+
+# Reboot prompt.
+while true;
+do
+	read -p "Would you like to reboot now? (y/n) " rebootConfirmation
+	rebootConfirmation = $(echo $rebootConfirmation | awk '{ print tolower($0) }')
+
+	case $rebootConfirmation in
+		"y")
+			printf "$green%s$normal\n" "Rebooting system..."
+			shutdown -r now
+			break
+			;;
+		"n")
+			printf "$yellow%s$normal\n" "Please reboot your system when convenient."
+			break
+			;;
+		*)
+			printf "$red%s$normal\n" "Invalid input.  Please try again."
+			;;
+	esac
+done
