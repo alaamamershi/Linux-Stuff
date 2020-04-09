@@ -164,6 +164,10 @@ alias bp='vi ~/.bash_profile'
 alias resrc='. ~/.bashrc && . ~/.bash_profile'
 alias rsrc='resrc'
 
+# git
+alias ga='git add'
+alias gc='git commit && git push'
+
 # i3wm config
 alias i3config='vi ~/.config/i3/config'
 
@@ -201,6 +205,7 @@ alias gd='gallery-dl'
 # Other.
 alias nano='nano -c'
 alias feh='feh --bg-scale'
+alias randwall='feh --randomize --bg-scale ~/Pictures/Wallpapers/'
 alias vncserver='vncserver :1 -geometry 1920x1080'
 alias vk='vncserver --kill'
 alias vpi3="sshpass -p '0890' ssh pi@192.168.0.193"
@@ -231,6 +236,11 @@ mountsmb() {
 	mountDir="/home/$USER/smb/"
 
 	sudo mount -t cifs //$smbIP/$smbShare -o username=$smbUser,password=$smbPass,uid=$EUID,gid=$EUID $mountDir
+}
+
+mynetmounts() {
+	sshfs pi@192.168.0.193:/home/pi/ ~/mounts/rpihome/
+	sshfs pi@192.168.0.193:/mnt/sda1/ ~/mounts/rpismb/
 }
 
 # Normalize audio files.
