@@ -37,41 +37,8 @@ fi
 
 
 #########################################################################################
-# CUSTOM APPEARANCE (CREATE DIRECTORIES + COPY FILES)
-#########################################################################################
-
-# Install custom themes.
-if [[ $(ls | grep themes | wc -c) -gt 0 ]]; then
-	mkdir ~/.themes
-	cp -v themes/* ~/.themes
-fi
-
-# Install custom icons.
-if [[ $(ls | grep icons | wc -c) -gt 0 ]]; then
-	mkdir ~/.icons
-	cp -v icons/* ~/.icons
-fi
-
-
-#########################################################################################
-# BLOATWARE REMOVAL
-#########################################################################################
-
-# Remove junk packages.
-apt -y autoremove --purge gnome-games-common gnome-calendar gnome-contacts
-apt -y autoremove --purge cheese rhythmbox
-apt -y autoremove --purge libreoffice*
-#apt -y autoremove --purge 
-apt -y autoremove 
-
-
-#########################################################################################
 # PACKAGE INSTALLATION
 #########################################################################################
-
-# Add custom package repositories.
-wget -qO- https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/16.04/mssql-server-2019.list)"
 
 # Update repos and installed packages.
 apt update
