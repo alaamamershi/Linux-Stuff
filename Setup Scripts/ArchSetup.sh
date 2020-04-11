@@ -5,7 +5,7 @@
 # 
 # Author:			Alaam Amershi
 # Date:				04/09/19
-# Last Modified:	04/09/20
+# Last Modified:	04/10/20
 # 
 # Description:
 # Setup script template.
@@ -40,12 +40,18 @@ fi
 # PACKAGE INSTALLATION
 #########################################################################################
 
+# Update repos and installed packages.
 pacman -Syu --noconfirm
-pacman -S --noconfirm base-devel git
-pacman -S --noconfirm make cmake gcc gcc8 linux-headers
-pacman -S --noconfirm tmux mosh
+
+# Install packages.
+pacman -S --noconfirm linux-headers
+pacman -S --noconfirm make cmake gcc gcc8
+pacman -S --noconfirm sudo git hub tmux mosh lynx nmap
+pacman -S --noconfirm openvpn tor
 pacman -S --noconfirm samba sshfs
 pacman -S --noconfirm apache php-apache
+pacman -S --noconfirm wireshark-cli wireshark-qt
+pacman -S --noconfirm vlc
 #pacman -S --noconfirm 
 
 
@@ -53,7 +59,8 @@ pacman -S --noconfirm apache php-apache
 # USER PERMS
 #########################################################################################
 
-
+usermod -a -G sudo $USER
+usermod -a -G www-data $USER
 
 
 #########################################################################################
