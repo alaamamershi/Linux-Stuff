@@ -1,22 +1,13 @@
 ########################################################################################
-# My i3wm Config
+# config
 #
 # Author:           Alaam Amershi
 # Date:             11/30/19
-# Last Modified:    03/21/20
+# Last Modified:    04/11/20
 #
 # Description:
 # My i3wm config.
 ########################################################################################
-
-########################################################################################
-# VARIABLES
-########################################################################################
-
-set $fontSize 8
-set $resizeDelta 1
-set $audioSink 0
-
 
 ########################################################################################
 # BASE CONFIG
@@ -27,13 +18,14 @@ set $mod Mod1
 floating_modifier $mod
 
 # Font.
+set $fontSize 8
 #font pango:DroidSansMono 8
 font pango:DejaVu Sans Mono, FontAwesome $fontSize
 
-# Default terminal emulator.
+# Launch default terminal emulator.
 bindsym $mod+Return exec i3-sensible-terminal
 
-# Close focussed container.
+# Close focussed tile.
 bindsym $mod+Shift+q kill
 bindsym $mod+q kill
 
@@ -85,15 +77,15 @@ bindsym $mod+space focus mode_toggle
 
 
 ########################################################################################
-# WINDOW LAYOUT
+# TILE LAYOUT
 ########################################################################################
 
-# Change layout.
+# Change tile layout.
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
-# Remove window border and title bars.
+# Remove tile border and title bars for all tiles.
 #for_window [class="^.*"] border pixel 1
 for_window [class="^.*"] border pixel 1
 #new_window normal
@@ -155,32 +147,40 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 
 
 ########################################################################################
-# RESIZE MODE
+# TILE RESIZING
 ########################################################################################
 
+# Amount to resize tile per keypress.
+set $resizeDelta 1
+
+# Resize mode.
 mode "resize" {
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width $resizeDelta px or $resizeDelta ppt
-        bindsym k resize grow height $resizeDelta px or $resizeDelta ppt
-        bindsym l resize shrink height $resizeDelta px or $resizeDelta ppt
-        bindsym semicolon resize grow width $resizeDelta px or $resizeDelta ppt
+	# Vim keybinds.
+    bindsym h resize shrink width $resizeDelta px or $resizeDelta ppt
+    bindsym j resize grow height $resizeDelta px or $resizeDelta ppt
+    bindsym k resize shrink height $resizeDelta px or $resizeDelta ppt
+    bindsym l resize grow width $resizeDelta px or $resizeDelta ppt
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width $resizeDelta px or $resizeDelta ppt
-        bindsym Down resize grow height $resizeDelta px or $resizeDelta ppt
-        bindsym Up resize shrink height $resizeDelta px or $resizeDelta ppt
-        bindsym Right resize grow width $resizeDelta px or $resizeDelta ppt
+    # Same bindings as above, except with the arrow keys.
+    bindsym Left resize shrink width $resizeDelta px or $resizeDelta ppt
+    bindsym Down resize grow height $resizeDelta px or $resizeDelta ppt
+    bindsym Up resize shrink height $resizeDelta px or $resizeDelta ppt
+    bindsym Right resize grow width $resizeDelta px or $resizeDelta ppt
 
-        # back to normal: Enter or Escape or $mod+r
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym $mod+r mode "default"
+    # Keybinds for returning to normal mode.
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
 }
 
+# Resize mode keybind.
 bindsym $mod+r mode "resize"
+
+# Tile resizing keybinds for normal mode.
+bindsym $mod+j resize shrink width $resizeDelta px or $resizeDelta ppt
+bindsym $mod+i resize grow height $resizeDelta px or $resizeDelta ppt
+bindsym $mod+k resize shrink height $resizeDelta px or $resizeDelta ppt
+bindsym $mod+l resize grow width $resizeDelta px or $resizeDelta ppt
 
 
 ########################################################################################
@@ -196,9 +196,9 @@ bar {
 		separator #ffffff
 		background #000000
 		statusline #ffffff
-		focused_workspace #222222 #ffee00 #000000
+		focused_workspace #222222 #00bb00 #000000
 		active_workspace #222222 #222222 #ffffff
-		inactive_workspace #222222 #222222 #aaaaaa
+		inactive_workspace #222222 #111111 #aaaaaa
 		urgent_workspace #222222 #ff0000 #ffffff
 	}
 }
@@ -207,6 +207,9 @@ bar {
 ########################################################################################
 # MEDIA KEY MAPPINGS
 ########################################################################################
+
+# Index of audio device to adjust volume of.
+set $audioSink 0
 
 # Pulse Audio controls.
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume $audioSink +5%
@@ -225,20 +228,13 @@ bindsym XF86AudioNext exec playerctl next
 
 
 ########################################################################################
-# WORKSPACE ASSIGNMENTS FOR NEW WINDOWS
+# WORKSPACE ASSIGNMENTS FOR NEW TILES
 ########################################################################################
 
-#assign [class="google-chrome"] $ws1
-#assign [class="Firefox"] $ws1
+assign [class="google-chrome"] $ws1
+assign [class="Firefox"] $ws1
 
-#assign [class="vlc"] $ws4
-#assign [class="pavucontrol"] $ws4
-#assign [class="blueman-manager"] $ws4
-
-#assign [class="code"] $ws6
-
-#assign [class="vmware"] $ws8
-#assign [class="vmplayer"] $ws8
+assign [class="vlc"] $ws2
 
 #assign [class=""]
 
@@ -267,12 +263,10 @@ exec --no-startup-id xset -dpms		# Stop monitor shutoff timeout.
 
 # Set wallpaper.
 #exec --no-startup-id feh --bg-scale
-#exec --no-startup-id feh --randomize --bg-fill ~/Pictures/Wallpapers/
 #exec --no-startup-id feh --randomize --bg-scale ~/Pictures/Wallpapers/
-exec --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/strider.png
+exec --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/wallpaper.png
 
 # Launch programs.
-#exec google-chrome
-#exec terminator
-#exec pavucontrol
+exec google-chrome
+exec vlc
 #exec
