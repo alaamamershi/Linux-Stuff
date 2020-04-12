@@ -111,7 +111,6 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-export PATH="$PATH:/opt/mssql-tools/bin"
 
 
 ########################################################################################
@@ -166,10 +165,8 @@ alias rsrc='resrc'
 
 # git
 alias ga='git add'
+alias gd='git remove'
 alias gc='git commit && git push'
-
-# i3wm config
-alias i3config='vi ~/.config/i3/config'
 
 # tmux
 alias tm='tmux'
@@ -202,12 +199,16 @@ alias fd='fdupes'
 alias gallery-dl='~/.local/bin/gallery-dl'
 alias gd='gallery-dl'
 
-# Other.
-alias nano='nano -c'
+# i3wm
+alias i3config='vi ~/.config/i3/config'
 alias feh='feh --bg-scale'
 alias randwall='feh --randomize --bg-scale ~/Pictures/Wallpapers/'
+
+# vncserver
 alias vncserver='vncserver :1 -geometry 1920x1080'
 alias vk='vncserver --kill'
+
+# sshpass
 alias vpi3="sshpass -p '0890' ssh pi@192.168.0.193"
 
 
@@ -239,8 +240,12 @@ mountsmb() {
 }
 
 mynetmounts() {
-	sshfs pi@192.168.0.193:/home/pi/ ~/mounts/rpihome/
-	sshfs pi@192.168.0.193:/mnt/sda1/ ~/mounts/rpismb/
+	host="192.168.0.193"
+	user="pi"
+	pass="0890"
+
+	sshpass -p $pass sshfs $user@$host:/home/pi/ ~/mounts/rpihome/
+	sshpass -p $pass sshfs $user@$host:/mnt/sda1/ ~/mounts/rpismb/
 }
 
 # Normalize audio files.
@@ -273,7 +278,7 @@ torbrowser() {
 
 	case $1 in
 		"-s" | "--start")
-			pwd=$(pwd)/
+			pwd="$(pwd)/"
 			cd ~/tor-browser_en-US/ && ./start-tor-browser.desktop
 			cd $pwd
 			;;
