@@ -3,7 +3,7 @@
 #
 # Author:           Alaam Amershi
 # Date:             11/30/19
-# Last Modified:    04/21/20
+# Last Modified:    05/04/20
 #
 # Description:
 # My i3wm config.
@@ -253,8 +253,3 @@ exec --no-startup-id xset -dpms		# Stop monitor shutoff timeout.
 #exec --no-startup-id feh --bg-scale
 #exec --no-startup-id feh --randomize --bg-scale ~/Pictures/Wallpapers/
 exec --no-startup-id feh --bg-scale ~/Pictures/wallpaper.png
-
-# Launch programs.
-exec google-chrome
-exec vlc
-#exec
